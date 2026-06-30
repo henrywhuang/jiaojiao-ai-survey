@@ -63,66 +63,9 @@
   }
 
   /* ===== 头图 / 开场 ===== */
-  /* ===== 头图（活泼灵动 · 天空气球风） ===== */
-  .hero{
-    position:relative;overflow:hidden;color:#fff;
-    padding:16px 20px 56px;text-align:center;
-    background:
-      radial-gradient(130% 78% at 50% -8%, #C9ECFF 0%, rgba(201,236,255,0) 58%),
-      linear-gradient(180deg,#4DB1EF 0%,#6FC4F3 44%,#A6DCF8 100%);
-  }
-  /* 漂浮云朵 */
-  .cloud{position:absolute;background:#fff;border-radius:100px;z-index:1;pointer-events:none}
-  .cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
-  .c1{width:64px;height:20px;top:58px;left:14px;opacity:.9;animation:float 7s ease-in-out infinite}
-  .c1::before{width:32px;height:32px;top:-15px;left:8px}
-  .c1::after{width:24px;height:24px;top:-10px;left:32px}
-  .c2{width:50px;height:16px;top:36px;right:18px;opacity:.82;animation:float 9s ease-in-out infinite reverse}
-  .c2::before{width:24px;height:24px;top:-12px;left:7px}
-  .c2::after{width:18px;height:18px;top:-8px;left:24px}
-  .c3{width:40px;height:13px;top:120px;right:40px;opacity:.7;animation:float 8s ease-in-out infinite}
-  .c3::before{width:19px;height:19px;top:-9px;left:6px}
-  .c3::after{width:15px;height:15px;top:-6px;left:20px}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-  /* 顶部标签行 */
-  .hero-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:3}
-  .htag{
-    font-family:'Fredoka',-apple-system,sans-serif;font-weight:600;font-size:11px;letter-spacing:1px;
-    background:rgba(255,255,255,.28);border:1.5px solid rgba(255,255,255,.7);
-    color:#fff;padding:3px 11px;border-radius:9px;backdrop-filter:blur(2px);
-  }
-  .hero-eyebrow{
-    font-family:'Fredoka',-apple-system,sans-serif;font-weight:600;letter-spacing:3px;font-size:11px;
-    margin:16px 0 4px;opacity:.96;position:relative;z-index:3;
-  }
-  /* 3D 气球立体标题 */
-  .balloon{position:relative;z-index:3;margin:0;line-height:1}
-  .balloon .l1{
-    display:block;font-family:'ZCOOL KuaiLe',cursive;font-size:50px;letter-spacing:2px;color:#fff;
-    -webkit-text-stroke:4px #2C76BE;paint-order:stroke fill;
-    text-shadow:
-      0 2px 0 #2C76BE,0 3px 0 #2C76BE,0 5px 0 #2668a8,
-      0 7px 0 #205c95,0 13px 12px rgba(16,55,100,.4);
-  }
-  .balloon .l2{
-    display:inline-block;margin-top:8px;font-family:'Baloo 2',cursive;font-weight:800;
-    font-size:19px;letter-spacing:1.5px;color:#FFD23F;
-    -webkit-text-stroke:3px #fff;paint-order:stroke fill;
-    text-shadow:0 2px 0 #E8A21A,0 4px 0 #cf9015,0 7px 7px rgba(120,70,0,.28);
-  }
-  .hero-sub{
-    position:relative;z-index:3;font-size:13.5px;margin:12px 0 0;font-weight:600;
-    color:#fff;text-shadow:0 1px 3px rgba(20,60,100,.25);
-  }
-  .hero-illus{display:block;width:78%;max-width:300px;height:auto;margin:8px auto 0;position:relative;z-index:2;filter:drop-shadow(0 8px 14px rgba(20,60,110,.22))}
-  /* 特色胶囊 */
-  .hero-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin-top:12px;position:relative;z-index:3}
-  .hero-pills .pill{
-    font-size:12px;font-weight:700;color:#2C76BE;background:#fff;
-    padding:6px 13px;border-radius:999px;box-shadow:0 4px 10px rgba(20,60,110,.18);
-  }
-  /* 底部云朵波浪过渡 */
-  .hero-wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;display:block;z-index:2}
+  /* ===== 头图（成图 banner） ===== */
+  .hero{position:relative;line-height:0;background:#7FC4F3}
+  .hero-img{display:block;width:100%;height:auto}
 
   .intro{
     background:var(--card);margin:14px 16px 0;border-radius:18px;
@@ -314,65 +257,12 @@
 
 <div class="wrap">
 
-  <!-- 头图（活泼灵动 · 天空气球风） -->
+  <!-- 头图（成图 banner） -->
   <div class="hero">
-    <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span>
-
-    <div class="hero-top">
-      <span class="htag">JOIN US</span>
-      <span class="htag">2026 新课</span>
-    </div>
-
-    <div class="hero-eyebrow">叫叫儿童AI课 · 用户意向调研</div>
-    <h1 class="balloon">
-      <span class="l1">AI创造营</span>
-      <span class="l2">AI CREATIVE CAMP</span>
-    </h1>
-    <p class="hero-sub">认识AI · 安全用AI · 把想法变成真实作品 ✨</p>
-
-    <!-- 配图：火箭 / 机器人 / 调色盘 / 星星（呼应 AI 科技 + 创造） -->
-    <svg class="hero-illus" viewBox="0 0 320 132" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 星星点缀 -->
-      <path d="M28 22l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L20.8 27.3l5-.7z" fill="#FFE36E"/>
-      <circle cx="300" cy="20" r="3.5" fill="#FFE36E"/><circle cx="288" cy="40" r="2.2" fill="#fff"/>
-      <circle cx="14" cy="70" r="2.6" fill="#fff"/>
-      <!-- 火箭 -->
-      <g transform="rotate(-12 80 70)">
-        <path d="M80 30c14 6 22 22 22 40 0 8-3 15-7 20H65c-4-5-7-12-7-20 0-18 8-34 22-40z" fill="#fff"/>
-        <circle cx="80" cy="58" r="9" fill="#7FD0FF" stroke="#2C76BE" stroke-width="2.5"/>
-        <path d="M58 78c-7 2-12 8-13 18 9-2 14-6 18-10z" fill="#FF7A33"/>
-        <path d="M102 78c7 2 12 8 13 18-9-2-14-6-18-10z" fill="#FF7A33"/>
-        <path d="M72 90h16l-3 12c-1 4-9 4-10 0z" fill="#FFB23F"/>
-        <path d="M76 104c0 5 8 5 8 0" stroke="#FF7A33" stroke-width="3" stroke-linecap="round"/>
-      </g>
-      <!-- 机器人 -->
-      <g>
-        <rect x="206" y="52" width="50" height="44" rx="13" fill="#6C5CE7"/>
-        <circle cx="221" cy="73" r="6" fill="#fff"/><circle cx="241" cy="73" r="6" fill="#fff"/>
-        <circle cx="222" cy="74" r="2.4" fill="#2B2B3A"/><circle cx="242" cy="74" r="2.4" fill="#2B2B3A"/>
-        <rect x="224" y="85" width="14" height="4" rx="2" fill="#A29BFE"/>
-        <rect x="227" y="40" width="8" height="13" rx="4" fill="#A29BFE"/><circle cx="231" cy="38" r="4.5" fill="#FFE36E"/>
-        <rect x="196" y="66" width="10" height="6" rx="3" fill="#8E7BF0"/>
-        <rect x="256" y="66" width="10" height="6" rx="3" fill="#8E7BF0"/>
-      </g>
-      <!-- 调色盘（创造） -->
-      <g transform="translate(150 92)">
-        <path d="M22 0C9 0-1 9-1 21c0 8 6 11 12 11 5 0 6-3 9-3 4 0 5 4 11 4 9 0 14-9 14-19C45 9 35 0 22 0z" fill="#fff" stroke="#2C76BE" stroke-width="2"/>
-        <circle cx="12" cy="14" r="3" fill="#FF7A33"/><circle cx="24" cy="9" r="3" fill="#6C5CE7"/>
-        <circle cx="35" cy="15" r="3" fill="#22C55E"/><circle cx="14" cy="25" r="3" fill="#FFD23F"/>
-      </g>
-    </svg>
-
-    <div class="hero-pills">
-      <span class="pill">🚀 7天 / 21天</span>
-      <span class="pill">🎨 真实AI作品</span>
-      <span class="pill">🏆 我的作品集</span>
-    </div>
-
-    <!-- 底部云朵波浪过渡到内容区 -->
-    <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 38c80-20 150 6 240 6s170-26 280-22 180 30 280 28 190-30 300-26 180 26 340 16v36H0z" fill="#F6F5FB"/>
-    </svg>
+    <picture>
+      <source srcset="hero.webp" type="image/webp">
+      <img class="hero-img" src="hero.jpg" width="1200" height="900" alt="叫叫儿童AI课 · AI创造营 · 用户意向调研">
+    </picture>
   </div>
 
   <!-- 开场白 -->
