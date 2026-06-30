@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>调研结果 · 数据表格</title>
+<style>
+  :root{--ai:#6C5CE7;--brand:#FF7A33;--ink:#2B2B3A;--soft:#6A6A7C;--line:#ECEAF3;--bg:#F6F5FB}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,#6C5CE7,#8E7BF0 60%,#FF9A5A 150%);color:#fff;padding:22px 26px}
+  header h1{margin:0;font-size:20px}
+  header .sub{opacity:.92;font-size:13px;margin-top:4px}
+  .bar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:16px 26px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+  .stat{background:var(--bg);border-radius:12px;padding:8px 16px}
+  .stat b{font-size:20px;color:var(--ai)}
+  .stat span{font-size:12px;color:var(--soft);margin-left:6px}
+  .actions{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .btn.csv{background:var(--brand);color:#fff}
+  .btn.refresh{background:#EEEAFB;color:var(--ai)}
+  .btn.clear{background:#FCE8E8;color:#D6453F}
+  .wrap{padding:18px 26px 60px;overflow-x:auto}
+  table{border-collapse:collapse;font-size:12.5px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(46,38,90,.06);min-width:100%}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F4F1FF;color:var(--ai);font-weight:700;white-space:nowrap}
+  td{max-width:240px}
+  tr:hover td{background:#FAF9FE}
+  td.idx{font-weight:700;color:var(--soft)}
+  td.time{color:var(--soft);font-size:11.5px;white-space:nowrap}
+  td.hl{color:var(--brand);font-weight:700}
+  .empty{color:#CBC9D8}
+  .none{padding:60px;text-align:center;color:var(--soft);line-height:1.8}
+  .note{font-size:12px;color:var(--soft);padding:0 26px 20px}
+  .note code{background:#EEEAFB;color:var(--ai);padding:1px 6px;border-radius:5px}
+</style>
+</head>
+<body>
+<header>
+  <h1>叫叫儿童AI课调研 · 数据表格</h1>
+  <div class="sub">本页读取本浏览器收集到的问卷提交，可一键导出 Excel/CSV</div>
+</header>
+<div class="bar">
+  <div class="stat"><b id="total">0</b><span>份问卷</span></div>
+  <div class="stat"><b id="subs">0</b><span>个早鸟手机号</span></div>
+  <div class="actions">
+    <a class="btn refresh" href="javascript:location.reload()">↻ 刷新</a>
+    <button class="btn csv" onclick="exportCSV()">⬇ 导出 CSV</button>
+    <button class="btn clear" onclick="clearAll()">🗑 清空</button>
+  </div>
+</div>
+<div class="wrap" id="wrap"></div>
+<p class="note">说明：此页统计的是<strong>本浏览器</strong> localStorage 中的提交（适合本地预览/单机收集）。需要多设备汇总时，请在 <code>index.html</code> 的 <code>CONFIG.ENDPOINT</code> 配置 Google 表格地址，数据会直接写入 Google Sheet —— 详见 <code>README.md</code>。</p>
+
+<script>
+const STORE_KEY='ai_survey_submissions';
+const FIELDS=[
+  ['q1','1.孩子年龄段'],['q2','2.是否用过AI'],['q3','3.用AI做过的事'],['q4','4.最希望获得'],
+  ['q5','5.偏好课程形式'],['q6','6.产品方案偏好'],['q7','7.选择原因'],['q8','8.7天课价格'],
+  ['q9','9.21天课价格'],['q10','10.购买意向'],['q11','附加.期待或担心'],['_subscribePhone','订阅手机号']
+];
+function read(){ try{return JSON.parse(localStorage.getItem(STORE_KEY)||'[]')}catch{return[]} }
+function fmt(v){ return v==null?'':Array.isArray(v)?v.join('；'):String(v) }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+function render(){
+  const rows=read().slice().reverse(), total=rows.length;
+  document.getElementById('total').textContent=total;
+  document.getElementById('subs').textContent=rows.filter(r=>r._subscribePhone).length;
+  const wrap=document.getElementById('wrap');
+  if(!total){ wrap.innerHTML='<div class="none">暂无提交数据<br>去 <a href="index.html">填写问卷</a> 后回来刷新看看～</div>'; return; }
+  const ths=['#','提交时间',...FIELDS.map(f=>f[1])].map(h=>`<th>${esc(h)}</th>`).join('');
+  const trs=rows.map((r,i)=>{
+    const tds=FIELDS.map(f=>{
+      const v=fmt(r[f[0]]); const cls=(f[0]==='_subscribePhone'&&v)?' class="hl"':'';
+      return `<td${cls}>${esc(v)||'<span class="empty">—</span>'}</td>`;
+    }).join('');
+    return `<tr><td class="idx">${total-i}</td><td class="time">${esc(r._time||'')}</td>${tds}</tr>`;
+  }).join('');
+  wrap.innerHTML=`<table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
+}
+function exportCSV(){
+  const rows=read(); if(!rows.length){ alert('暂无数据'); return; }
+  const cell=s=>{ s=fmt(s).replace(/"/g,'""'); return /[",\n]/.test(s)?`"${s}"`:s; };
+  const header=['提交时间',...FIELDS.map(f=>f[1])];
+  const lines=[header.map(cell).join(',')];
+  rows.forEach(r=>lines.push([r._time||'',...FIELDS.map(f=>fmt(r[f[0]]))].map(cell).join(',')));
+  const csv='﻿'+lines.join('\r\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='ai_survey_results.csv'; a.click();
+}
+function clearAll(){ if(confirm('确定清空本浏览器收集的全部问卷数据？此操作不可恢复')){ localStorage.removeItem(STORE_KEY); render(); } }
+render();
+</script>
+</body>
+</html>

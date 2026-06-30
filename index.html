@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>叫叫儿童AI课 · 用户意向调研</title>
+<style>
+  :root{
+    --brand:#FF7A33;        /* 叫叫橙 */
+    --brand-dark:#F25C16;
+    --ai:#6C5CE7;           /* AI 紫 */
+    --ai-light:#A29BFE;
+    --ink:#2B2B3A;
+    --ink-soft:#6A6A7C;
+    --line:#ECEAF3;
+    --bg:#F6F5FB;
+    --card:#FFFFFF;
+    --ok:#22C55E;
+    --shadow:0 8px 24px rgba(46,38,90,.08);
+    --shadow-lg:0 14px 40px rgba(46,38,90,.14);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 0 120px;position:relative}
+
+  /* ===== 顶部预售订阅通知条 ===== */
+  .notice{
+    position:sticky;top:0;z-index:50;
+    background:linear-gradient(90deg,#FFF1E8,#F1ECFF);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:saturate(160%) blur(6px);
+  }
+  .notice-inner{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 16px;max-width:560px;margin:0 auto;
+  }
+  .notice .bell{
+    width:26px;height:26px;flex:0 0 26px;border-radius:50%;
+    background:var(--brand);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 0 rgba(255,122,51,.5);animation:ring 2.4s infinite;
+  }
+  @keyframes ring{
+    0%{box-shadow:0 0 0 0 rgba(255,122,51,.45)}
+    70%{box-shadow:0 0 0 8px rgba(255,122,51,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,122,51,0)}
+  }
+  .notice .txt{font-size:12.5px;color:var(--ink);flex:1;min-width:0}
+  .notice .txt b{color:var(--brand-dark)}
+  .notice .go{
+    font-size:12px;color:#fff;background:var(--ai);
+    padding:5px 12px;border-radius:999px;white-space:nowrap;border:none;font-weight:600;
+  }
+
+  /* ===== 头图 / 开场 ===== */
+  .hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#6C5CE7 0%,#8E7BF0 55%,#FF9A5A 140%);
+    color:#fff;padding:26px 22px 30px;
+  }
+  .hero .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);
+    padding:4px 12px;border-radius:999px;font-size:12px;margin-bottom:14px;
+  }
+  .hero h1{font-size:24px;line-height:1.35;margin:0 0 6px;font-weight:800;letter-spacing:.5px}
+  .hero .sub{font-size:13.5px;opacity:.94;margin:0}
+  .hero-illus{display:block;width:100%;height:auto;margin-top:18px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.12))}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5}
+  .b1{width:130px;height:130px;background:#FFC56B;top:-40px;right:-30px}
+  .b2{width:90px;height:90px;background:#B9AEFF;bottom:-30px;left:-20px}
+
+  .intro{
+    background:var(--card);margin:14px 16px 0;border-radius:18px;
+    padding:18px 18px 16px;box-shadow:var(--shadow);
+  }
+  .intro p{margin:0 0 10px;font-size:14px;color:var(--ink-soft)}
+  .intro p:last-child{margin-bottom:0}
+  .intro .lead{color:var(--ink);font-weight:600;font-size:14.5px}
+
+  /* ===== 进度条 ===== */
+  .progress-bar{
+    position:sticky;top:45px;z-index:40;
+    margin:16px 16px 0;background:var(--card);border-radius:999px;
+    padding:6px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;
+  }
+  .progress-track{flex:1;height:8px;background:var(--line);border-radius:999px;overflow:hidden}
+  .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--ai),var(--brand));border-radius:999px;transition:width .35s ease}
+  .progress-pct{font-size:12px;font-weight:700;color:var(--ai);min-width:34px;text-align:right;padding-right:6px}
+
+  /* ===== 题目卡片 ===== */
+  .q{
+    background:var(--card);margin:14px 16px 0;border-radius:18px;
+    padding:18px;box-shadow:var(--shadow);
+  }
+  .q-head{display:flex;gap:10px;margin-bottom:14px}
+  .q-no{
+    flex:0 0 26px;width:26px;height:26px;border-radius:8px;
+    background:linear-gradient(135deg,var(--ai),var(--ai-light));
+    color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  }
+  .q-title{font-size:15.5px;font-weight:700;color:var(--ink);margin:1px 0 0}
+  .q-tip{font-size:12px;color:var(--ai);font-weight:600;margin-top:3px}
+  .q-tip.multi{color:var(--brand-dark)}
+
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{
+    display:flex;align-items:center;gap:11px;
+    border:1.5px solid var(--line);border-radius:13px;
+    padding:12px 13px;font-size:14px;color:var(--ink);
+    cursor:pointer;transition:all .15s ease;background:#fff;
+  }
+  .opt:active{transform:scale(.99)}
+  .opt .mark{
+    flex:0 0 20px;width:20px;height:20px;border:2px solid #D5D2E4;
+    display:flex;align-items:center;justify-content:center;transition:all .15s ease;
+  }
+  .opt .mark.radio{border-radius:50%}
+  .opt .mark.check{border-radius:6px}
+  .opt .mark svg{width:11px;height:11px;opacity:0;transform:scale(.5);transition:all .15s ease}
+  .opt.sel{border-color:var(--ai);background:linear-gradient(0deg,#F4F1FF,#F4F1FF)}
+  .opt.sel .mark{background:var(--ai);border-color:var(--ai)}
+  .opt.sel .mark svg{opacity:1;transform:scale(1)}
+  .opt.disabled{opacity:.45;pointer-events:none}
+  .opt .other-in{
+    flex:1;border:none;outline:none;font-size:14px;background:transparent;
+    border-bottom:1.5px dashed #D5D2E4;padding:2px 0;color:var(--ink);min-width:60px;
+  }
+
+  /* ===== Q6 产品对比配图卡 ===== */
+  .compare{display:flex;flex-direction:column;gap:13px;margin-bottom:16px}
+  .pcard{
+    border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;
+  }
+  .pcard .ptop{padding:14px 14px 12px;display:flex;gap:12px;align-items:flex-start}
+  .pcard .picon{flex:0 0 64px;width:64px;height:64px;border-radius:14px;overflow:hidden}
+  .pcard .pmeta{flex:1;min-width:0}
+  .ptag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;margin-bottom:5px}
+  .ptag.a{background:#FFF1E8;color:var(--brand-dark)}
+  .ptag.b{background:#F1ECFF;color:var(--ai)}
+  .pname{font-size:16px;font-weight:800;margin:0 0 2px}
+  .pcard ul{margin:2px 0 0;padding-left:0;list-style:none}
+  .pcard li{font-size:12.5px;color:var(--ink-soft);padding-left:18px;position:relative;margin-bottom:3px;line-height:1.5}
+  .pcard li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--brand)}
+  .pcard.bb li::before{background:var(--ai)}
+  .pcard .pfoot{
+    background:#FAF9FE;border-top:1px solid var(--line);
+    padding:8px 14px;font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between
+  }
+  .pcard .pfoot b{color:var(--ink)}
+
+  /* ===== 开放题 ===== */
+  textarea.open{
+    width:100%;border:1.5px solid var(--line);border-radius:13px;
+    padding:13px;font-size:14px;font-family:inherit;resize:vertical;min-height:96px;
+    outline:none;color:var(--ink);background:#fff;
+  }
+  textarea.open:focus{border-color:var(--ai)}
+
+  /* ===== 早鸟订阅区 ===== */
+  .subcard{
+    margin:16px 16px 0;border-radius:20px;overflow:hidden;
+    background:linear-gradient(150deg,#6C5CE7,#8E7BF0 60%,#FF9A5A 150%);
+    color:#fff;padding:22px 20px;position:relative;box-shadow:var(--shadow-lg);
+  }
+  .subcard .stitle{font-size:18px;font-weight:800;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+  .subcard .sdesc{font-size:13px;opacity:.95;margin:0 0 14px}
+  .subcard .field{
+    display:flex;gap:8px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+    border-radius:13px;padding:5px 5px 5px 14px;align-items:center;
+  }
+  .subcard input.phone{
+    flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:15px;letter-spacing:.5px;
+  }
+  .subcard input.phone::placeholder{color:rgba(255,255,255,.7)}
+  .subcard .sbtn{
+    background:#fff;color:var(--ai);border:none;font-weight:800;font-size:14px;
+    padding:11px 16px;border-radius:10px;white-space:nowrap;
+  }
+  .subcard .agree{font-size:11px;opacity:.85;margin:10px 0 0;display:flex;align-items:center;gap:6px}
+
+  /* ===== 提交 ===== */
+  .submit-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+  .submit-bar-inner{max-width:560px;margin:0 auto}
+  .btn-submit{
+    width:100%;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;color:#fff;
+    background:linear-gradient(90deg,var(--brand),var(--brand-dark));box-shadow:0 8px 20px rgba(255,122,51,.35);
+  }
+  .btn-submit:disabled{background:#CFCBDD;box-shadow:none}
+
+  /* ===== Toast 通知弹层 ===== */
+  .toast{
+    position:fixed;left:50%;top:60px;transform:translate(-50%,-20px);
+    z-index:90;background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);
+    padding:12px 14px;display:flex;gap:11px;align-items:center;max-width:340px;width:calc(100% - 40px);
+    opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.2,.8,.2,1);
+    border:1px solid var(--line);
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .toast .ti{flex:0 0 38px;width:38px;height:38px;border-radius:11px;background:#FFF1E8;display:flex;align-items:center;justify-content:center}
+  .toast .tt{font-size:13px}
+  .toast .tt b{display:block;font-size:13.5px;color:var(--ink);margin-bottom:1px}
+  .toast .tt span{color:var(--ink-soft)}
+
+  /* ===== 完成弹窗 ===== */
+  .modal-mask{
+    position:fixed;inset:0;z-index:100;background:rgba(30,24,60,.5);
+    display:flex;align-items:center;justify-content:center;padding:30px;
+    opacity:0;pointer-events:none;transition:opacity .3s;
+  }
+  .modal-mask.show{opacity:1;pointer-events:auto}
+  .modal{
+    background:#fff;border-radius:22px;padding:28px 22px 22px;text-align:center;max-width:340px;width:100%;
+    transform:scale(.9);transition:transform .3s cubic-bezier(.2,.9,.3,1.2);
+  }
+  .modal-mask.show .modal{transform:scale(1)}
+  .modal .ok-ic{width:62px;height:62px;margin:0 auto 14px}
+  .modal h3{margin:0 0 6px;font-size:19px}
+  .modal p{margin:0 0 18px;font-size:13.5px;color:var(--ink-soft)}
+  .modal .mbtn{width:100%;border:none;border-radius:12px;padding:13px;font-weight:700;font-size:15px;color:#fff;background:var(--ai)}
+
+  .footnote{text-align:center;font-size:11.5px;color:#A9A7B8;margin:18px 16px 0}
+</style>
+</head>
+<body>
+
+<!-- 顶部预售订阅通知条 -->
+<div class="notice" id="notice">
+  <div class="notice-inner">
+    <div class="bell">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a6 6 0 0 0-6 6v3.6L4.3 15.2A1 1 0 0 0 5.2 16.7h13.6a1 1 0 0 0 .9-1.5L18 11.6V8a6 6 0 0 0-6-6zm0 20a3 3 0 0 0 2.83-2H9.17A3 3 0 0 0 12 22z"/></svg>
+    </div>
+    <div class="txt"><b>预售即将开启</b> · 留下手机号，新课开售第一时间通知你</div>
+    <button class="go" onclick="scrollToSub()">去订阅</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 头图 -->
+  <div class="hero">
+    <span class="blob b1"></span><span class="blob b2"></span>
+    <span class="badge">🚀 升级版 · AI创造营 内测筹备中</span>
+    <h1>叫叫儿童AI课<br>用户意向调研</h1>
+    <p class="sub">让孩子认识AI、安全用AI，用AI把想法变成真实作品</p>
+    <!-- 头部配图（内联SVG，自适应） -->
+    <svg class="hero-illus" viewBox="0 0 340 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="118" y="34" width="104" height="80" rx="14" fill="#fff"/>
+      <rect x="130" y="48" width="80" height="9" rx="4.5" fill="#E4DEFF"/>
+      <rect x="130" y="64" width="58" height="7" rx="3.5" fill="#F1ECFF"/>
+      <circle cx="170" cy="92" r="13" fill="#FF7A33"/>
+      <path d="M165 92l4 4 7-7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="158" y="114" width="24" height="20" rx="3" fill="#D8D2F5"/>
+      <rect x="138" y="132" width="64" height="6" rx="3" fill="#C9C2EE"/>
+      <!-- 机器人 -->
+      <g>
+        <rect x="48" y="56" width="52" height="46" rx="12" fill="#6C5CE7"/>
+        <circle cx="64" cy="78" r="6" fill="#fff"/><circle cx="84" cy="78" r="6" fill="#fff"/>
+        <circle cx="65" cy="79" r="2.4" fill="#2B2B3A"/><circle cx="85" cy="79" r="2.4" fill="#2B2B3A"/>
+        <rect x="66" y="90" width="16" height="4" rx="2" fill="#A29BFE"/>
+        <rect x="70" y="44" width="8" height="12" rx="4" fill="#A29BFE"/><circle cx="74" cy="42" r="4" fill="#FFC56B"/>
+      </g>
+      <!-- 小朋友画笔 -->
+      <g>
+        <circle cx="266" cy="74" r="18" fill="#FFC56B"/>
+        <circle cx="266" cy="68" r="10" fill="#FFE0B0"/>
+        <path d="M256 74q10 10 20 0" stroke="#F25C16" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <rect x="284" y="58" width="6" height="34" rx="3" fill="#FF7A33" transform="rotate(28 284 58)"/>
+      </g>
+      <circle cx="40" cy="40" r="4" fill="#FFC56B"/><circle cx="300" cy="40" r="5" fill="#A29BFE"/>
+      <circle cx="312" cy="110" r="3.5" fill="#FF7A33"/>
+    </svg>
+  </div>
+
+  <!-- 开场白 -->
+  <div class="intro">
+    <p class="lead">亲爱的家长朋友们：</p>
+    <p>AI正在加速进入孩子的学习与生活。为了帮助孩子更好地理解AI、使用AI，也更从容地面对未来，我们正在筹备<b style="color:var(--ai)">升级版AI创造营</b>。</p>
+    <p>我们希望孩子不仅能认识AI、理解AI，更能学会正确、安全地使用AI，并借助AI把自己的想法变成真实作品。</p>
+    <p>您的反馈将直接影响课程最终的内容设计与产品形式，感谢您的参与与支持～</p>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar">
+    <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+    <div class="progress-pct" id="ppct">0%</div>
+  </div>
+
+  <form id="surveyForm">
+    <div id="questions"></div>
+
+    <!-- 早鸟订阅卡 -->
+    <div class="subcard" id="subcard">
+      <p class="stitle">🔔 订阅早鸟通知</p>
+      <p class="sdesc">产品预售开启时第一时间通知您，并享受专属早鸟优惠</p>
+      <div class="field">
+        <input class="phone" id="phone" type="tel" maxlength="11" inputmode="numeric" placeholder="请输入手机号">
+        <button type="button" class="sbtn" onclick="subscribe()">立即订阅</button>
+      </div>
+      <p class="agree">🔒 仅用于预售开课通知，不会用于其他用途</p>
+    </div>
+
+    <div class="footnote">本问卷约需 1—2 分钟 · 叫叫儿童AI课产品组</div>
+  </form>
+</div>
+
+<!-- 底部提交 -->
+<div class="submit-bar">
+  <div class="submit-bar-inner">
+    <button class="btn-submit" id="submitBtn" onclick="submitForm()">提交问卷</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div class="ti">🎉</div>
+  <div class="tt"><b id="toastTitle">订阅成功</b><span id="toastDesc">预售开启时我们会短信通知您</span></div>
+</div>
+
+<!-- 完成弹窗 -->
+<div class="modal-mask" id="modalMask">
+  <div class="modal">
+    <svg class="ok-ic" viewBox="0 0 62 62"><circle cx="31" cy="31" r="31" fill="#F1ECFF"/><circle cx="31" cy="31" r="20" fill="#6C5CE7"/><path d="M23 31l6 6 11-12" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h3>提交成功，感谢您！</h3>
+    <p>您的反馈将直接影响课程设计。<br>别忘了订阅早鸟通知，抢先体验新课～</p>
+    <button class="mbtn" onclick="closeModal()">我知道了</button>
+  </div>
+</div>
+
+<script>
+/* ====== 提交配置 ======
+ * GitHub Pages 是纯静态托管，没有自带后端。
+ * ① 想真正跨设备收集 → 把 ENDPOINT 填成你的 Google Apps Script Web App 地址
+ *    （部署步骤见 README.md，结果会自动写进一张 Google 表格）。
+ * ② ENDPOINT 留空 → 提交暂存到本浏览器 localStorage，
+ *    可在 results.html 里以表格查看 / 导出 CSV（适合本地预览 & 单机收集）。
+ */
+const CONFIG = {
+  ENDPOINT: '',          // 例：'https://script.google.com/macros/s/AKfy.../exec'
+  STORE_KEY: 'ai_survey_submissions'
+};
+
+/* ====== 问卷数据 ====== */
+const CHECK_SVG ='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+
+const QUESTIONS = [
+  {id:'q1',type:'single',title:'您的孩子目前处于哪个年龄段？',
+   opts:['6岁及以下','7—8岁','9—10岁','11—12岁','13—14岁','15岁及以上']},
+  {id:'q2',type:'single',title:'孩子目前是否使用过AI工具？',
+   opts:['经常使用','偶尔使用','听说过，但没有真正使用过','完全不了解']},
+  {id:'q3',type:'multi',title:'孩子目前主要用AI做过哪些事情？',tip:'多选',
+   opts:['问问题、查资料','写作文或完成作业','生成图片','写故事','做视频或音乐','编程或制作小游戏','与AI聊天','没有使用过',{other:true}]},
+  {id:'q4',type:'multi',max:3,title:'如果孩子学习AI，您最希望他获得什么？',tip:'最多选 3 项',
+   opts:['了解AI基础知识','了解前沿科技发展','学会向AI清楚表达需求','学会判断AI结果是否可靠','学会正确、安全地使用AI','能借助AI完成真实作品','提升创造力','提升逻辑思维','提升自主学习能力','形成自己的AI作品集',{other:true}]},
+  {id:'q5',type:'single',title:'以下哪种课程形式更吸引您？',
+   opts:['以动画和知识讲解为主','以完成真实项目为主','知识讲解和项目实践各占一半','暂时不能判断']},
+  {id:'q6',type:'compare'},
+  {id:'q7',type:'multi',title:'您选择这一产品形式的主要原因是什么？',tip:'多选',
+   opts:['时间更合适','价格预计更容易接受','孩子更容易坚持','完成的作品数量更有吸引力','希望内容更系统','希望先低门槛体验','希望孩子了解更多AI和科技知识','希望形成完整作品集',{other:true}]},
+  {id:'q8',type:'single',title:'对于"7天完成1个真实AI作品"的课程，您可以接受的价格是？',
+   opts:['39元以内','40—59元','60—79元','80—99元','100—149元','150元以上','暂时不会购买']},
+  {id:'q9',type:'single',title:'对于"21天学习AI通识、了解前沿科技并完成3个真实AI作品"的课程，您可以接受的价格是？',
+   opts:['99元以内','100—149元','150—199元','200—299元','300—399元','400元以上','暂时不会购买']},
+  {id:'q10',type:'single',title:'假设课程内容符合您的预期，您目前的购买意向是？',
+   opts:['产品开放后会直接购买','有早鸟优惠会考虑购买','想先看详细介绍或试听','想先看其他孩子的作品','需要和孩子商量','暂时不会购买']},
+  {id:'q11',type:'open',title:'关于儿童AI课程，您还有哪些期待或担心？',tip:'开放题 · 选填',
+   placeholder:'欢迎写下您的期待或顾虑，我们会认真倾听～'},
+];
+
+const answers = {};   // 存储作答
+
+/* ====== Q6 产品对比配图（内联SVG） ====== */
+const ICON_A = `<svg viewBox="0 0 64 64" width="64" height="64"><rect width="64" height="64" fill="#FFF1E8"/><rect x="14" y="16" width="36" height="28" rx="4" fill="#FF7A33"/><rect x="20" y="22" width="24" height="3" rx="1.5" fill="#fff"/><rect x="20" y="28" width="18" height="3" rx="1.5" fill="#FFD3B5"/><circle cx="32" cy="38" r="4" fill="#fff"/><text x="32" y="56" font-size="11" font-weight="800" fill="#F25C16" text-anchor="middle">7天</text></svg>`;
+const ICON_B = `<svg viewBox="0 0 64 64" width="64" height="64"><rect width="64" height="64" fill="#F1ECFF"/><rect x="13" y="14" width="14" height="34" rx="3" fill="#6C5CE7"/><rect x="29" y="20" width="14" height="28" rx="3" fill="#8E7BF0"/><rect x="45" y="11" width="6" height="37" rx="3" fill="#A29BFE"/><circle cx="20" cy="10" r="4" fill="#FFC56B"/><text x="32" y="60" font-size="11" font-weight="800" fill="#6C5CE7" text-anchor="middle">21天</text></svg>`;
+
+function renderCompare(){
+  return `
+  <div class="q" data-q="q6">
+    <div class="q-head">
+      <div class="q-no">6</div>
+      <div>
+        <div class="q-title">以下两种产品，哪一种更符合您的需求？</div>
+        <div class="q-tip">单选 · 点击下方卡片查看详情</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="pcard">
+        <div class="ptop">
+          <div class="picon">${ICON_A}</div>
+          <div class="pmeta">
+            <span class="ptag a">方案 A</span>
+            <p class="pname">7天 AI项目营</p>
+            <ul>
+              <li>7天完成 1 个真实AI作品</li>
+              <li>每天约 20—30 分钟</li>
+              <li>适合快速体验一个具体项目</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pfoot"><span>体验门槛</span><b>轻 · 快速上手</b></div>
+      </div>
+      <div class="pcard bb">
+        <div class="ptop">
+          <div class="picon">${ICON_B}</div>
+          <div class="pmeta">
+            <span class="ptag b">方案 B</span>
+            <p class="pname">21天 AI创造营</p>
+            <ul>
+              <li>学习基础AI通识</li>
+              <li>用听得懂的方式了解前沿科技</li>
+              <li>完成 3 个真实AI作品</li>
+              <li>形成孩子的第一份AI作品集</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pfoot"><span>系统程度</span><b>深 · 完整作品集</b></div>
+      </div>
+    </div>
+    <div class="opts" data-opts="q6">
+      ${['更倾向7天AI项目营','更倾向21天AI创造营','两种都感兴趣','两种都不感兴趣','还需要了解更多信息']
+        .map(o=>optHtml('q6','single',o)).join('')}
+    </div>
+  </div>`;
+}
+
+function optHtml(qid,type,label,isOther){
+  const markCls = type==='single'?'radio':'check';
+  if(isOther){
+    return `<label class="opt" data-val="__other__" onclick="pick(this,'${qid}','${type}',true)">
+      <span class="mark ${markCls}">${CHECK_SVG}</span>
+      <span>其他：</span>
+      <input class="other-in" placeholder="请填写" onclick="event.stopPropagation()" oninput="otherInput('${qid}',this)">
+    </label>`;
+  }
+  return `<label class="opt" data-val="${label}" onclick="pick(this,'${qid}','${type}')">
+    <span class="mark ${markCls}">${CHECK_SVG}</span>
+    <span>${label}</span>
+  </label>`;
+}
+
+/* ====== 渲染题目 ====== */
+function render(){
+  let html='';
+  let num=0;
+  QUESTIONS.forEach(q=>{
+    if(q.type==='compare'){ html+=renderCompare(); num=6; return; }
+    num++;
+    if(q.type==='open'){
+      html+=`<div class="q" data-q="${q.id}">
+        <div class="q-head"><div class="q-no">${num}</div>
+          <div><div class="q-title">${q.title}</div><div class="q-tip">${q.tip}</div></div></div>
+        <textarea class="open" placeholder="${q.placeholder}" oninput="answers['${q.id}']=this.value"></textarea>
+      </div>`;
+      return;
+    }
+    const tipCls = q.type==='multi'?'q-tip multi':'q-tip';
+    const tip = q.tip ? `<div class="${tipCls}">${q.tip}</div>` : `<div class="q-tip">单选</div>`;
+    const optsHtml = q.opts.map(o=>{
+      if(typeof o==='object'&&o.other) return optHtml(q.id,q.type,'',true);
+      return optHtml(q.id,q.type,o);
+    }).join('');
+    html+=`<div class="q" data-q="${q.id}">
+      <div class="q-head"><div class="q-no">${num}</div>
+        <div><div class="q-title">${q.title}</div>${tip}</div></div>
+      <div class="opts" data-opts="${q.id}" data-max="${q.max||''}">${optsHtml}</div>
+    </div>`;
+  });
+  document.getElementById('questions').innerHTML=html;
+}
+
+/* ====== 选择逻辑 ====== */
+function pick(el,qid,type,isOther){
+  const box = el.parentElement;
+  if(type==='single'){
+    box.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    el.classList.add('sel');
+    answers[qid]= isOther ? ('其他：'+(el.querySelector('.other-in').value||'')) : el.dataset.val;
+    if(isOther) el.querySelector('.other-in').focus();
+  } else {
+    // 多选
+    const max = parseInt(box.dataset.max)||0;
+    const cur = box.querySelectorAll('.opt.sel');
+    if(!el.classList.contains('sel') && max && cur.length>=max){
+      flashToast('选择已达上限','本题最多选择 '+max+' 项');
+      return;
+    }
+    el.classList.toggle('sel');
+    if(el.classList.contains('sel') && isOther) el.querySelector('.other-in').focus();
+    // 收集
+    const vals=[];
+    box.querySelectorAll('.opt.sel').forEach(o=>{
+      if(o.dataset.val==='__other__'){
+        const t=o.querySelector('.other-in').value;
+        vals.push('其他：'+(t||''));
+      } else vals.push(o.dataset.val);
+    });
+    answers[qid]=vals;
+    // “没有使用过”这种互斥可在此扩展，这里保持简单
+  }
+  updateProgress();
+}
+
+function otherInput(qid,inp){
+  const box = inp.closest('.opts');
+  const opt = inp.closest('.opt');
+  const type = box.dataset.opts;
+  // 输入即视为选中（单选场景下需已选中）
+  if(opt.classList.contains('sel')){
+    // 重新收集
+    if(box.querySelector('.mark.radio')){ // single
+      answers[box.dataset.opts]='其他：'+inp.value;
+    } else {
+      const vals=[];
+      box.querySelectorAll('.opt.sel').forEach(o=>{
+        if(o.dataset.val==='__other__') vals.push('其他：'+(o.querySelector('.other-in').value||''));
+        else vals.push(o.dataset.val);
+      });
+      answers[box.dataset.opts]=vals;
+    }
+  }
+}
+
+/* ====== 进度 ====== */
+function answeredCount(){
+  let c=0;
+  QUESTIONS.forEach(q=>{
+    if(q.type==='open') return; // 开放题选填不计入必答
+    const a=answers[q.id];
+    if(Array.isArray(a)? a.length>0 : (a!==undefined&&a!=='')) c++;
+  });
+  return c;
+}
+function totalRequired(){ return QUESTIONS.filter(q=>q.type!=='open').length; }
+function updateProgress(){
+  const pct=Math.round(answeredCount()/totalRequired()*100);
+  document.getElementById('pfill').style.width=pct+'%';
+  document.getElementById('ppct').textContent=pct+'%';
+}
+
+/* ====== Toast ====== */
+let toastTimer=null;
+function flashToast(title,desc,emoji){
+  const t=document.getElementById('toast');
+  document.getElementById('toastTitle').textContent=title;
+  document.getElementById('toastDesc').textContent=desc;
+  if(emoji) t.querySelector('.ti').textContent=emoji;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* ====== 订阅 ====== */
+function scrollToSub(){
+  document.getElementById('subcard').scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(()=>document.getElementById('phone').focus(),400);
+}
+function subscribe(){
+  const p=document.getElementById('phone').value.trim();
+  if(!/^1\d{10}$/.test(p)){ flashToast('手机号有误','请输入正确的 11 位手机号','📱'); return; }
+  answers._subscribePhone=p;
+  flashToast('订阅成功','预售开启时我们会短信通知您','🎉');
+}
+
+/* ====== 提交 ====== */
+function submitForm(){
+  const missing=[];
+  QUESTIONS.forEach((q,i)=>{
+    if(q.type==='open') return;
+    const a=answers[q.id];
+    const ok = Array.isArray(a)? a.length>0 : (a!==undefined&&a!=='');
+    if(!ok) missing.push(q.type==='compare'?6:i+1);
+  });
+  if(missing.length){
+    flashToast('还有题目未完成','请完成第 '+missing[0]+' 题','✏️');
+    const el=document.querySelector('[data-q="'+QUESTIONS[missing[0]>6?missing[0]-1:missing[0]-1].id+'"]');
+    const target=document.querySelectorAll('.q')[missing[0]-1];
+    if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  // 提交
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='提交中…';
+  const record=Object.assign({},answers,{_time:new Date().toLocaleString('zh-CN',{hour12:false})});
+
+  const done=()=>{ document.getElementById('modalMask').classList.add('show'); btn.disabled=false; btn.textContent='提交问卷'; };
+  const fail=()=>{ flashToast('提交失败','网络异常，请稍后重试','⚠️'); btn.disabled=false; btn.textContent='提交问卷'; };
+
+  if(CONFIG.ENDPOINT){
+    // 远端收集（Google 表格 / 自建后端）。Apps Script 需用简单请求避免预检
+    fetch(CONFIG.ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(record)})
+      .then(()=>done()).catch(fail);
+  } else {
+    // 本地兜底：存 localStorage，可在 results.html 查看表格
+    try{
+      const arr=JSON.parse(localStorage.getItem(CONFIG.STORE_KEY)||'[]');
+      arr.push(record);
+      localStorage.setItem(CONFIG.STORE_KEY,JSON.stringify(arr));
+      done();
+    }catch(e){ fail(); }
+  }
+}
+function closeModal(){
+  document.getElementById('modalMask').classList.remove('show');
+  if(!answers._subscribePhone) scrollToSub();
+}
+
+/* ====== init ====== */
+render();
+updateProgress();
+// 进入页面 1.2s 后弹一次预售提醒
+setTimeout(()=>flashToast('预售订阅提醒','留下手机号，新课开售第一时间通知你','🔔'),1300);
+</script>
+</body>
+</html>
