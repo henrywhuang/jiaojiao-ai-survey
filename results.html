@@ -56,7 +56,7 @@
 const STORE_KEY='ai_survey_submissions';
 const FIELDS=[
   ['q1','1.孩子年龄段'],['q2','2.是否用过AI'],['q3','3.用AI做过的事'],['q4','4.最希望获得'],
-  ['q5','5.偏好课程形式'],['q6','6.产品方案偏好'],['q7','7.选择原因'],['q8','8.7天课价格'],
+  ['q5','5.偏好课程形式'],['q6','6.产品方案偏好'],['q6b','6-1.7天营·最想做的项目'],['q7','7.选择原因'],['q8','8.7天课价格'],
   ['q9','9.21天课价格'],['q10','10.购买意向'],['q11','附加.期待或担心'],['_subscribePhone','订阅手机号']
 ];
 function read(){ try{return JSON.parse(localStorage.getItem(STORE_KEY)||'[]')}catch{return[]} }
