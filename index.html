@@ -23,7 +23,7 @@
     --shadow-lg:0 14px 40px rgba(46,38,90,.14);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0}
+  html,body{margin:0;padding:0;overflow-x:hidden}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     background:var(--bg);
@@ -181,26 +181,29 @@
   }
 
   /* ===== Q6 产品对比配图卡 ===== */
-  .compare{display:flex;flex-direction:column;gap:13px;margin-bottom:16px}
+  .compare{display:flex;flex-direction:row;gap:11px;margin-bottom:16px}
   .pcard{
+    flex:1;min-width:0;display:flex;flex-direction:column;
     border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;
   }
-  .pcard .ptop{padding:14px 14px 12px;display:flex;gap:12px;align-items:flex-start}
-  .pcard .picon{flex:0 0 64px;width:64px;height:64px;border-radius:14px;overflow:hidden}
-  .pcard .pmeta{flex:1;min-width:0}
+  .pcard .ptop{flex:1;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .pcard .picon{width:58px;height:58px;border-radius:14px;overflow:hidden;margin-bottom:9px}
+  .pcard .picon svg{display:block;width:100%;height:100%}
+  .pcard .pmeta{width:100%;min-width:0}
   .ptag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;margin-bottom:5px}
   .ptag.a{background:#FFF1E8;color:var(--brand-dark)}
   .ptag.b{background:#F1ECFF;color:var(--ai)}
-  .pname{font-size:16px;font-weight:800;margin:0 0 2px}
-  .pcard ul{margin:2px 0 0;padding-left:0;list-style:none}
-  .pcard li{font-size:12.5px;color:var(--ink-soft);padding-left:18px;position:relative;margin-bottom:3px;line-height:1.5}
-  .pcard li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--brand)}
+  .pname{font-size:15px;font-weight:800;margin:0 0 7px;line-height:1.25}
+  .pcard ul{margin:0;padding:0;list-style:none;text-align:left}
+  .pcard li{font-size:12px;color:var(--ink-soft);padding-left:14px;position:relative;margin-bottom:4px;line-height:1.45}
+  .pcard li::before{content:"";position:absolute;left:1px;top:6px;width:6px;height:6px;border-radius:50%;background:var(--brand)}
   .pcard.bb li::before{background:var(--ai)}
   .pcard .pfoot{
     background:#FAF9FE;border-top:1px solid var(--line);
-    padding:8px 14px;font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between
+    padding:8px 10px;font-size:11px;color:var(--ink-soft);
+    display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center
   }
-  .pcard .pfoot b{color:var(--ink)}
+  .pcard .pfoot b{color:var(--ink);font-size:12px}
 
   /* ===== 开放题 ===== */
   textarea.open{
