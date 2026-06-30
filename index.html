@@ -231,6 +231,22 @@
     padding:11px 16px;border-radius:10px;white-space:nowrap;
   }
   .subcard .agree{font-size:11px;opacity:.85;margin:10px 0 0;display:flex;align-items:center;gap:6px}
+  /* 奖励钩子块 */
+  .reward{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.34);
+    border-radius:14px;padding:12px 13px;margin:0 0 14px;
+  }
+  .reward .rhead{font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:6px;margin-bottom:9px}
+  .reward .rhead .lbl{background:#FFD23F;color:#7A4B00;font-size:10.5px;font-weight:900;padding:1px 7px;border-radius:6px;letter-spacing:.3px}
+  .reward .prizes{display:flex;gap:8px}
+  .reward .prize{
+    flex:1;background:rgba(255,255,255,.95);border-radius:11px;padding:9px 8px;text-align:center;color:var(--ink);
+  }
+  .reward .prize .pemoji{font-size:20px;line-height:1.1}
+  .reward .prize .pbig{font-family:'Baloo 2','ZCOOL KuaiLe',sans-serif;font-weight:800;font-size:15px;color:var(--brand-dark);margin-top:2px;line-height:1.1}
+  .reward .prize .psm{font-size:11px;color:var(--ink-soft);margin-top:1px}
+  .reward .rflow{font-size:11px;opacity:.95;margin:9px 0 0;text-align:center;line-height:1.5}
+  .reward .rflow b{color:#FFD23F}
 
   /* ===== 提交 ===== */
   .submit-bar{
@@ -287,8 +303,8 @@
     <div class="bell">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a6 6 0 0 0-6 6v3.6L4.3 15.2A1 1 0 0 0 5.2 16.7h13.6a1 1 0 0 0 .9-1.5L18 11.6V8a6 6 0 0 0-6-6zm0 20a3 3 0 0 0 2.83-2H9.17A3 3 0 0 0 12 22z"/></svg>
     </div>
-    <div class="txt"><b>预售即将开启</b> · 留下手机号，新课开售第一时间通知你</div>
-    <button class="go" onclick="scrollToSub()">去订阅</button>
+    <div class="txt"><b>订阅预售提醒抽好礼</b> · 有机会免费体验 或得 20元立减券</div>
+    <button class="go" onclick="scrollToSub()">抽奖</button>
   </div>
 </div>
 
@@ -374,13 +390,32 @@
 
     <!-- 早鸟订阅卡 -->
     <div class="subcard" id="subcard">
-      <p class="stitle">🔔 订阅早鸟通知</p>
-      <p class="sdesc">产品预售开启时第一时间通知您，并享受专属早鸟优惠</p>
+      <p class="stitle">🎁 订阅预售提醒 · 抽免费名额</p>
+      <p class="sdesc">完成调研并订阅预售提醒，开售即获<b style="color:#FFD23F">抽奖名额</b>，有机会得：</p>
+
+      <!-- 奖励钩子 -->
+      <div class="reward">
+        <div class="rhead"><span class="lbl">限量福利</span><span>开售当天抽奖，两份好礼任你抽</span></div>
+        <div class="prizes">
+          <div class="prize">
+            <div class="pemoji">🎉</div>
+            <div class="pbig">免费体验</div>
+            <div class="psm">0 元抢先学</div>
+          </div>
+          <div class="prize">
+            <div class="pemoji">🎟️</div>
+            <div class="pbig">20元立减券</div>
+            <div class="psm">开课直接抵扣</div>
+          </div>
+        </div>
+        <p class="rflow">参与调研 ＋ 订阅预售提醒 → 开售即得 <b>抽奖资格</b></p>
+      </div>
+
       <div class="field">
         <input class="phone" id="phone" type="tel" maxlength="11" inputmode="numeric" placeholder="请输入手机号">
         <button type="button" class="sbtn" onclick="subscribe()">立即订阅</button>
       </div>
-      <p class="agree">🔒 仅用于预售开课通知，不会用于其他用途</p>
+      <p class="agree">🔒 仅用于预售开课通知与中奖联系，不会用于其他用途</p>
     </div>
 
     <div class="footnote">本问卷约需 1—2 分钟 · 叫叫儿童AI课产品组</div>
@@ -405,8 +440,8 @@
   <div class="modal">
     <svg class="ok-ic" viewBox="0 0 62 62"><circle cx="31" cy="31" r="31" fill="#F1ECFF"/><circle cx="31" cy="31" r="20" fill="#6C5CE7"/><path d="M23 31l6 6 11-12" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <h3>提交成功，感谢您！</h3>
-    <p>您的反馈将直接影响课程设计。<br>别忘了订阅早鸟通知，抢先体验新课～</p>
-    <button class="mbtn" onclick="closeModal()">我知道了</button>
+    <p>您的反馈将直接影响课程设计。<br>订阅预售提醒，开售即获 🎁 <b style="color:var(--brand-dark)">抽奖资格</b>，<br>有机会免费体验 或得 20元立减券～</p>
+    <button class="mbtn" onclick="closeModal()">去订阅抽奖</button>
   </div>
 </div>
 
@@ -641,7 +676,7 @@ function subscribe(){
   const p=document.getElementById('phone').value.trim();
   if(!/^1\d{10}$/.test(p)){ flashToast('手机号有误','请输入正确的 11 位手机号','📱'); return; }
   answers._subscribePhone=p;
-  flashToast('订阅成功','预售开启时我们会短信通知您','🎉');
+  flashToast('订阅成功 · 已获抽奖资格','开售当天短信通知您参与抽奖','🎉');
 }
 
 /* ====== 提交 ====== */
@@ -691,7 +726,7 @@ function closeModal(){
 render();
 updateProgress();
 // 进入页面 1.2s 后弹一次预售提醒
-setTimeout(()=>flashToast('预售订阅提醒','留下手机号，新课开售第一时间通知你','🔔'),1300);
+setTimeout(()=>flashToast('订阅预售提醒抽好礼','开售即获抽奖名额，有机会免费体验/得20元券','🎁'),1300);
 </script>
 </body>
 </html>
