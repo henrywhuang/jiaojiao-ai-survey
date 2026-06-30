@@ -56,6 +56,7 @@
   }
   .notice .txt{font-size:12.5px;color:var(--ink);flex:1;min-width:0}
   .notice .txt b{color:var(--brand-dark)}
+  .notice .txt strong{font-weight:800;color:var(--ink)}
   .notice .go{
     font-size:12px;color:#fff;background:var(--ai);
     padding:5px 12px;border-radius:999px;white-space:nowrap;border:none;font-weight:600;
@@ -306,7 +307,7 @@
     <div class="bell">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a6 6 0 0 0-6 6v3.6L4.3 15.2A1 1 0 0 0 5.2 16.7h13.6a1 1 0 0 0 .9-1.5L18 11.6V8a6 6 0 0 0-6-6zm0 20a3 3 0 0 0 2.83-2H9.17A3 3 0 0 0 12 22z"/></svg>
     </div>
-    <div class="txt"><b>订阅预售提醒抽好礼</b> · 有机会免费体验 或得 20元立减券</div>
+    <div class="txt"><b>订阅预售提醒抽好礼</b> · 有机会<strong>免费体验</strong> 或 <strong>获得 20 元立减券</strong></div>
     <button class="go" onclick="scrollToSub()">抽奖</button>
   </div>
 </div>
@@ -443,7 +444,7 @@
   <div class="modal">
     <svg class="ok-ic" viewBox="0 0 62 62"><circle cx="31" cy="31" r="31" fill="#F1ECFF"/><circle cx="31" cy="31" r="20" fill="#6C5CE7"/><path d="M23 31l6 6 11-12" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <h3>提交成功，感谢您！</h3>
-    <p>您的反馈将直接影响课程设计。<br>订阅预售提醒，开售即获 🎁 <b style="color:var(--brand-dark)">抽奖资格</b>，<br>有机会免费体验 或得 20元立减券～</p>
+    <p>您的反馈将直接影响课程设计。<br>订阅预售提醒，开售即获 🎁 <b style="color:var(--brand-dark)">抽奖资格</b>，<br>有机会<b>免费体验</b> 或 <b>获得 20 元立减券</b>～</p>
     <button class="mbtn" onclick="closeModal()">去订阅抽奖</button>
   </div>
 </div>
@@ -729,7 +730,7 @@ function closeModal(){
 render();
 updateProgress();
 // 进入页面 1.2s 后弹一次预售提醒
-setTimeout(()=>flashToast('订阅预售提醒抽好礼','开售即获抽奖名额，有机会免费体验/得20元券','🎁'),1300);
+setTimeout(()=>flashToast('订阅预售提醒抽好礼','开售即获抽奖名额，有机会免费体验 或 获得20元立减券','🎁'),1300);
 </script>
 </body>
 </html>
