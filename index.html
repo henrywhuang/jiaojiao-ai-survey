@@ -64,7 +64,7 @@
 
   /* ===== 头图 / 开场 ===== */
   /* ===== 头图（成图 banner） ===== */
-  .hero{position:relative;line-height:0;background:#7FC4F3}
+  .hero{position:relative;line-height:0;background:#DCEAFB}
   .hero-img{display:block;width:100%;height:auto}
 
   .intro{
@@ -261,16 +261,19 @@
   <div class="hero">
     <picture>
       <source srcset="hero.webp" type="image/webp">
-      <img class="hero-img" src="hero.jpg" width="1200" height="900" alt="叫叫儿童AI课 · AI创造营 · 用户意向调研">
+      <img class="hero-img" src="hero.jpg" width="1536" height="1024" alt="叫叫儿童AI课 · AI创造营 · 用户调研问卷">
     </picture>
   </div>
 
   <!-- 开场白 -->
   <div class="intro">
     <p class="lead">亲爱的家长朋友们：</p>
-    <p>AI正在加速进入孩子的学习与生活。为了帮助孩子更好地理解AI、使用AI，也更从容地面对未来，我们正在筹备<b style="color:var(--ai)">升级版AI创造营</b>。</p>
-    <p>我们希望孩子不仅能认识AI、理解AI，更能学会正确、安全地使用AI，并借助AI把自己的想法变成真实作品。</p>
-    <p>您的反馈将直接影响课程最终的内容设计与产品形式，感谢您的参与与支持～</p>
+    <p>AI 正在加速走进孩子的学习与生活。比起"会不会用 AI"，更重要的是孩子能不能<b style="color:var(--ai)">看懂它、用对它，并借助它把想法变成真实的作品</b>。</p>
+    <p>为此，我们打磨了一门完整的孩子 AI 启蒙课——<b style="color:var(--ai)">《21天AI创造营》</b>：</p>
+    <p style="margin-bottom:6px">🧠 <b style="color:var(--ink)">系统学 AI 通识</b>：用孩子听得懂的方式，把 AI 与前沿科技讲明白；</p>
+    <p style="margin-bottom:6px">🛡️ <b style="color:var(--ink)">学会安全规范地用 AI</b>：知道怎么问、怎么判断结果是否可靠、哪些边界不能碰；</p>
+    <p>🎨 <b style="color:var(--ink)">21 天完成 3 个真实 AI 作品</b>：边学边做，沉淀孩子的第一份 AI 作品集。</p>
+    <p>您的每一条反馈都会直接影响课程内容与形式，问卷约 1—2 分钟，感谢您的参与与支持～</p>
   </div>
 
   <!-- 进度条 -->
@@ -356,86 +359,27 @@ const CONFIG = {
 const CHECK_SVG ='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
 
 const QUESTIONS = [
-  {id:'q1',type:'single',title:'您的孩子目前处于哪个年龄段？',
-   opts:['6岁及以下','7—8岁','9—10岁','11—12岁','13—14岁','15岁及以上']},
-  {id:'q2',type:'single',title:'孩子目前是否使用过AI工具？',
-   opts:['经常使用','偶尔使用','听说过，但没有真正使用过','完全不了解']},
-  {id:'q3',type:'multi',title:'孩子目前主要用AI做过哪些事情？',tip:'多选',
-   opts:['问问题、查资料','写作文或完成作业','生成图片','写故事','做视频或音乐','编程或制作小游戏','与AI聊天','没有使用过',{other:true}]},
-  {id:'q4',type:'multi',max:3,title:'如果孩子学习AI，您最希望他获得什么？',tip:'最多选 3 项',
+  {id:'q1',type:'single',title:'您的孩子目前处于哪个阶段？',
+   opts:['学龄前','小学低年级（1—3年级）','小学高年级（4—6年级）','初中','高中']},
+  {id:'q2',type:'single',title:'孩子目前使用AI工具的情况是？',
+   opts:['经常使用','偶尔使用','听说过，但还没真正用过','完全没接触过']},
+  {id:'q3',type:'multi',title:'孩子用AI主要做过哪些事？',tip:'多选',
+   opts:['问问题、查资料','写作文或完成作业','生成图片','写故事','做视频或音乐','编程或制作小游戏','和AI聊天','还没用过',{other:true}]},
+  {id:'q4',type:'multi',max:3,title:'如果孩子学习AI，您最希望他收获什么？',tip:'最多选 3 项',
    opts:['了解AI基础知识','了解前沿科技发展','学会向AI清楚表达需求','学会判断AI结果是否可靠','学会正确、安全地使用AI','学会用AI工具辅助各科学习','能借助AI完成真实作品','提升创造力','提升逻辑思维','提升自主学习能力','形成自己的AI作品集',{other:true}]},
-  {id:'q5',type:'single',title:'以下哪种课程形式更吸引您？',
-   opts:['以动画和知识讲解为主','以完成真实项目为主','知识讲解和项目实践各占一半','暂时不能判断']},
-  {id:'q6',type:'compare'},
-  {id:'q6b',type:'single',title:'以下是 7天 AI项目营 中可能做的项目类型，您希望孩子先上手体验哪个？',tip:'单选',
-   opts:['AI绘本小作者','AI学习提醒小宠物','我的AI时间小管家','我的零花钱计划','家庭任务小管家','AI小游戏',{other:true}]},
-  {id:'q7',type:'multi',title:'您选择这一产品形式的主要原因是什么？',tip:'多选',
-   opts:['时间更合适','价格预计更容易接受','孩子更容易坚持','完成的作品数量更有吸引力','希望内容更系统','希望先低门槛体验','希望孩子了解更多AI和科技知识','希望形成完整作品集',{other:true}]},
-  {id:'q8',type:'single',title:'对于"7天完成1个真实AI作品"的课程，您可以接受的价格是？',
-   opts:['39元以内','40—59元','60—79元','80—99元','100—149元','150元以上','暂时不会购买']},
-  {id:'q9',type:'single',title:'对于"21天学习AI通识、了解前沿科技并完成3个真实AI作品"的课程，您可以接受的价格是？',
+  {id:'q5',type:'multi',max:3,title:'课程会带孩子动手完成多个真实AI项目。以下项目，您最希望孩子体验哪些？',tip:'多选 · 最多选 3 项',
+   opts:['AI绘本：用AI写故事、配图片','AI科普报告：查证资料、整理成图文报告','AI学习助手：用AI制作背单词、复习的小工具','AI小游戏：用AI编程做游戏','AI动画短片：把创意做成会动的视频','AI智能体：搭一个会陪练、能答疑的小助手',{other:true}]},
+  {id:'q6',type:'multi',title:'《21天AI创造营》这种产品形式，吸引您的点有哪些？',tip:'多选',
+   opts:['21天系统学习，内容更完整','用孩子听得懂的方式了解前沿科技','21天完成3个真实作品，看得见成果','帮孩子沉淀一份完整的AI作品集','节奏适中，孩子更容易坚持、养成习惯','门槛不高，适合先低成本体验','价格预计更容易接受',{other:true}]},
+  {id:'q7',type:'single',title:'《21天AI创造营》（系统学AI通识、了解前沿科技、完成3个真实作品），您能接受的价格是？',
    opts:['99元以内','100—149元','150—199元','200—299元','300—399元','400元以上','暂时不会购买']},
-  {id:'q10',type:'single',title:'假设课程内容符合您的预期，您目前的购买意向是？',
+  {id:'q8',type:'single',title:'假设课程内容符合您的预期，您目前的购买意向是？',
    opts:['产品开放后会直接购买','有早鸟优惠会考虑购买','想先看详细介绍或试听','想先看其他孩子的作品','需要和孩子商量','暂时不会购买']},
-  {id:'q11',type:'open',title:'关于儿童AI课程，您还有哪些期待或担心？',tip:'开放题 · 选填',
+  {id:'q9',type:'open',title:'关于孩子的AI课程，您还有哪些期待或担心？',tip:'开放题 · 选填',
    placeholder:'欢迎写下您的期待或顾虑，我们会认真倾听～'},
 ];
 
 const answers = {};   // 存储作答
-
-/* ====== Q6 产品对比配图（内联SVG） ====== */
-const ICON_A = `<svg viewBox="0 0 64 64" width="64" height="64"><rect width="64" height="64" fill="#FFF1E8"/><rect x="14" y="16" width="36" height="28" rx="4" fill="#FF7A33"/><rect x="20" y="22" width="24" height="3" rx="1.5" fill="#fff"/><rect x="20" y="28" width="18" height="3" rx="1.5" fill="#FFD3B5"/><circle cx="32" cy="38" r="4" fill="#fff"/><text x="32" y="56" font-size="11" font-weight="800" fill="#F25C16" text-anchor="middle">7天</text></svg>`;
-const ICON_B = `<svg viewBox="0 0 64 64" width="64" height="64"><rect width="64" height="64" fill="#F1ECFF"/><rect x="13" y="14" width="14" height="34" rx="3" fill="#6C5CE7"/><rect x="29" y="20" width="14" height="28" rx="3" fill="#8E7BF0"/><rect x="45" y="11" width="6" height="37" rx="3" fill="#A29BFE"/><circle cx="20" cy="10" r="4" fill="#FFC56B"/><text x="32" y="60" font-size="11" font-weight="800" fill="#6C5CE7" text-anchor="middle">21天</text></svg>`;
-
-function renderCompare(){
-  return `
-  <div class="q" data-q="q6">
-    <div class="q-head">
-      <div class="q-no">6</div>
-      <div>
-        <div class="q-title">以下两种产品，哪一种更符合您的需求？</div>
-        <div class="q-tip">单选 · 点击下方卡片查看详情</div>
-      </div>
-    </div>
-    <div class="compare">
-      <div class="pcard">
-        <div class="ptop">
-          <div class="picon">${ICON_A}</div>
-          <div class="pmeta">
-            <span class="ptag a">方案 A</span>
-            <p class="pname">7天 AI项目营</p>
-            <ul>
-              <li>7天完成 1 个真实AI作品</li>
-              <li>每天约 20—30 分钟</li>
-              <li>适合快速体验一个具体项目</li>
-            </ul>
-          </div>
-        </div>
-        <div class="pfoot"><span>体验门槛</span><b>轻 · 快速上手</b></div>
-      </div>
-      <div class="pcard bb">
-        <div class="ptop">
-          <div class="picon">${ICON_B}</div>
-          <div class="pmeta">
-            <span class="ptag b">方案 B</span>
-            <p class="pname">21天 AI创造营</p>
-            <ul>
-              <li>学习基础AI通识</li>
-              <li>用听得懂的方式了解前沿科技</li>
-              <li>完成 3 个真实AI作品</li>
-              <li>形成孩子的第一份AI作品集</li>
-            </ul>
-          </div>
-        </div>
-        <div class="pfoot"><span>系统程度</span><b>深 · 完整作品集</b></div>
-      </div>
-    </div>
-    <div class="opts" data-opts="q6">
-      ${['更倾向7天AI项目营','更倾向21天AI创造营','两种都感兴趣','两种都不感兴趣','还需要了解更多信息']
-        .map(o=>optHtml('q6','single',o)).join('')}
-    </div>
-  </div>`;
-}
 
 function optHtml(qid,type,label,isOther){
   const markCls = type==='single'?'radio':'check';
@@ -457,7 +401,6 @@ function render(){
   let html='';
   let num=0;
   QUESTIONS.forEach(q=>{
-    if(q.type==='compare'){ html+=renderCompare(); num=6; return; }
     num++;
     if(q.type==='open'){
       html+=`<div class="q" data-q="${q.id}">
@@ -582,11 +525,10 @@ function submitForm(){
     if(q.type==='open') return;
     const a=answers[q.id];
     const ok = Array.isArray(a)? a.length>0 : (a!==undefined&&a!=='');
-    if(!ok) missing.push(q.type==='compare'?6:i+1);
+    if(!ok) missing.push(i+1);
   });
   if(missing.length){
     flashToast('还有题目未完成','请完成第 '+missing[0]+' 题','✏️');
-    const el=document.querySelector('[data-q="'+QUESTIONS[missing[0]>6?missing[0]-1:missing[0]-1].id+'"]');
     const target=document.querySelectorAll('.q')[missing[0]-1];
     if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
     return;
